@@ -1,4 +1,4 @@
---to decide?
+--floorplan
 
 q: 2d?
 q: resolution? dynamic, static. i recon start with static and then once we have the mechanics and engine in place, we make it dynamic.
@@ -11,6 +11,13 @@ q: turn base? or live?
 q: how early on we make mobile friendly - adding touch controls and dynamic game window.
 
 etc?
+
+
+--github
+
+q: how do we organise the files?
+q: do we use branches?
+
 
 --to do
 + define features
