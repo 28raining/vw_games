@@ -17,6 +17,7 @@ etc?
 
 q: how do we organise the files?
 q: do we use branches?
+q: do we use branches after we have a base/foundation? 
 
 
 --to do
