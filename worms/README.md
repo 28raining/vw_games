@@ -1,3 +1,0 @@
-hihti
-e
-re

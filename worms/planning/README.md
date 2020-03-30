@@ -1,0 +1,30 @@
+Planning Descisions
+=
+
+1. **Graphics library**
+Use SVG (2D)
+Use a library, either snap.js or svg.js because svg can get pretty out of hand. Library is 60KB, so quite heavy, but only loaded once. Probably available from Google CDN.
+Three.js is really good for 3D. We can put the SVG into this tool. For example if we wanted to make the board 3D. But later
+
+2. **Resolution**
+Eventually it needs to work on all devices. Design for desktop first but be very concious of smaller screens. Eventually it will by dynamic resolution
+
+3. **Libraries**
+Try not to use jquery?
+socket library
+svg / snap .js
+Maybe external font
+but for sure try to minimize it
+
+4. **Design**
+   * Should fit all in one screen, that is annoying about current worms
+   * Use an image as the background. Worms and weapons are drawn
+
+5. **Number of players**
+   * Start with multiplayer so we don't have to build a bot :)
+
+6. **Backend**
+   * I'm not faimiliar with this. So it's most interesting :) I did some googling and it seems that websockets are the best way to communicate with a server. Debugging C will drive me crazy. Go hopefully is better, Go is from Google.
+   * https://hashrocket.com/blog/posts/websocket-shootout
+
+![Top Level Diagram](TopLevelDiagram.png "Logo Title Text 1")
