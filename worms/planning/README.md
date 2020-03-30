@@ -19,12 +19,17 @@ but for sure try to minimize it
 4. **Design**
    * Should fit all in one screen, that is annoying about current worms
    * Use an image as the background. Worms and weapons are drawn
+   * On Desktop, use mouse to aim and shoot. On phone there should be a 'fire' button, and aim with finger
 
 5. **Number of players**
    * Start with multiplayer so we don't have to build a bot :)
 
 6. **Backend**
+   * *Note* - User input passes to server before being drawn. SVG drawer does not contribute to state.
    * I'm not faimiliar with this. So it's most interesting :) I did some googling and it seems that websockets are the best way to communicate with a server. Debugging C will drive me crazy. Go hopefully is better, Go is from Google.
-   * https://hashrocket.com/blog/posts/websocket-shootout
-
+   * [https://hashrocket.com/blog/posts/websocket-shootout](https://hashrocket.com/blog/posts/websocket-shootout)
+  
 ![Top Level Diagram](TopLevelDiagram.png "Logo Title Text 1")
+
+1. **Data Storage**
+   * We shouldn't need a database unless we need to retain data for days. I was imagining an array of strings. Each entry in the array is a string. The string is a JSON. It looks like JSON's can be compressed in BSON's
