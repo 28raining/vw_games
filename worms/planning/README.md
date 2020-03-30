@@ -1,9 +1,8 @@
-Planning Descisions
-=
+# Planning Descisions
 
 1. **Graphics library**
 Use SVG (2D)
-Use a library, either snap.js or svg.js because svg can get pretty out of hand. Library is 60KB, so quite heavy, but only loaded once. Probably available from Google CDN.
+Use a library, either snap.js or svg.js because drawing lots of objects in svg can get pretty messy! Library is 60KB, so quite heavy, but only loaded once. Probably available from Google CDN.
 Three.js is really good for 3D. We can put the SVG into this tool. For example if we wanted to make the board 3D. But later
 
 2. **Resolution**
@@ -28,8 +27,16 @@ but for sure try to minimize it
    * *Note* - User input passes to server before being drawn. SVG drawer does not contribute to state.
    * I'm not faimiliar with this. So it's most interesting :) I did some googling and it seems that websockets are the best way to communicate with a server. Debugging C will drive me crazy. Go hopefully is better, Go is from Google.
    * [https://hashrocket.com/blog/posts/websocket-shootout](https://hashrocket.com/blog/posts/websocket-shootout)
-  
-![Top Level Diagram](TopLevelDiagram.png "Logo Title Text 1")
+   * ![Top Level Diagram](TopLevelDiagram.png "Logo Title Text 1")
 
-1. **Data Storage**
+7. **Data Storage**
    * We shouldn't need a database unless we need to retain data for days. I was imagining an array of strings. Each entry in the array is a string. The string is a JSON. It looks like JSON's can be compressed in BSON's
+
+## Delegations
+
+| Preference | Will              | Vlad |
+|------------|-------------------|------|
+| 1          | Backend + Sockets |      |
+| 2          | Input processing  |      |
+| 3          | SVG drawing       |      |
+| 4          | Webpage           |      |
