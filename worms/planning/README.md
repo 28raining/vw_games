@@ -1,5 +1,11 @@
 # Planning Descisions
 
+## Status Updates
+
+[click here](status/README.md)
+
+## High Level Discussions
+
 1. **Graphics library**
 Use SVG (2D)
 Use a library, either snap.js or svg.js because drawing lots of objects in svg can get pretty messy! Library is 60KB, so quite heavy, but only loaded once. Probably available from Google CDN.
