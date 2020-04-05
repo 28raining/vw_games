@@ -10,10 +10,12 @@
 Use SVG (2D)
 Use a library, either snap.js or svg.js because drawing lots of objects in svg can get pretty messy! Library is 60KB, so quite heavy, but only loaded once. Probably available from Google CDN.
 Three.js is really good for 3D. We can put the SVG into this tool. For example if we wanted to make the board 3D. But later
+
 **Vlad**: SVG.js only shortens vanilla by around 50%. We can use it if you think it's worth the overhead to loading.
 
 2. **Resolution**
 Eventually it needs to work on all devices. Design for desktop first but be very concious of smaller screens. Eventually it will by dynamic resolution
+
 **Vlad**: Agree with this. Resize and window size check quite easy in vanilla. The content of the canvas needs to be fixed to a setting. need to add button that selects the size of the content inside the window to display. Some people might prefer larger or samller game features in function of vision and displat size.
 
 3. **Libraries**
@@ -22,6 +24,7 @@ socket library
 svg / snap .js
 Maybe external font
 but for sure try to minimize it
+
 **Vlad**:Agree. Try to use vanilla for everything unless real benefit. Any library will be an overhead to BW. 
 
 4. **Design**
