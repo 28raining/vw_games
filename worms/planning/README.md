@@ -63,6 +63,8 @@ ___
 
 **Vlad**: Agree. Point 6.
 
+**Vlad**: Let's consider netlify.com for website storage, can be linked to github.
+
 ___
 ## Delegations
 
