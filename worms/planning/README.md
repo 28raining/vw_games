@@ -55,7 +55,7 @@ ___
   
 **Vlad**: I'm a bit concerned about the backend, trying to write files on the server depends of service etc.. and can results in buggs and errors. I've worked with JSON and PHP and it's easy. Agree with string being sent to database and string being called from database in function of game id. Straight forward. Reading a file will be slow for the server if using a small homemade one. Not trivial setup.
 
-**Vlad**: Realtime databases seem what we need -> good point tryin to understand how they work. 
+**Vlad**: Realtime databases seem what we need -> good point trying to understand how they work. 
 
 ___
 7. **Data Storage**
