@@ -18,7 +18,7 @@ ___
 2. **Resolution**
 Eventually it needs to work on all devices. Design for desktop first but be very concious of smaller screens. Eventually it will by dynamic resolution
 
-**Vlad**: Agree with this. Resize and window size check quite easy in vanilla. The content of the canvas needs to be fixed to a setting. need to add button that selects the size of the content inside the window to display. Some people might prefer larger or samller game features in function of vision and displat size.
+**Vlad**: Agree with this. Resize and window size check quite easy in vanilla. The content of the canvas needs to be fixed to a setting. need to add button that selects the size of the content inside the window to display. Some people might prefer larger or samller game features in function of vision and display size. e.g. select worm size 10px, always this size unless changed in settings. 
 ___
 3. **Libraries**
 Try not to use jquery?
