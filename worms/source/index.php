@@ -10,7 +10,7 @@ $images = ("images");
 
 <script type='text/javascript'>
 //initialise data database / json / helps to get the php into javascript array / onload of the page / if we use the google realtime database might be different call /
-//please go to www.cretuvadim.ro -> to see an implementation of how this works and what it does, check the head. You'll see that the server is called only on page load -> i'm quite proud of this implementation :D
+//please go to www.vadimcretu.ro -> to see an implementation of how this works and what it does, check the head. You'll see that the server is called only on page load -> i'm quite proud of this implementation :D
 <?php
 $data = json_encode($images);
 echo "var data_js = ". $data . ";\n";
