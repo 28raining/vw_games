@@ -31,7 +31,7 @@ echo "var data_js = ". $data . ";\n";
 <body onresize="getSize()" onload="getSize()">
 
 <div id="header">
-	<?php include 'menu_items.php'; ?>
+	<?php include 'menu.php'; ?>
 </div>
 
 <div id="content">
@@ -39,7 +39,7 @@ echo "var data_js = ". $data . ";\n";
 </div>
 
 <div id="footer">
-
+	<?php include 'footer.php'; ?>
 </div>
 
 </body>
