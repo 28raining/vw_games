@@ -14,12 +14,12 @@ There will be at least 1x .js file per structure item.
 
 2. **Structure**
    * ![Top Level Diagram](TopLevelDiagram.png "Logo Title Text 1")
-   * Web page - A HTML document with minimal JS. Includes a landing page, then a page with a blank canvas
-   * User Input Processing - Reads user button presses, mouse movements, touch events, clicks and calls all the required functions. Player-assist graphics (like direction worm is aiming) are sent to the renderer and not the state.
-   * State Manipulator - Uses the currect game state and the new input to calculate the next state. Here will be the character-to-map interactions, applying physics to movement, etc.
-   * Data Management - Can be simple, can be complicated, but overall must allow user input to smoothly modify the state. i.e. lag from server to client should be nulled.
-   * Firebase - single point which all players communicate with
-   * Renderer - Uses the state to draw the scene to the webpage
+   * [**Web page**](web_page/README.md) - A HTML document with minimal JS. Includes a landing page, then a page with a blank canvas
+   * [**User Input Processing**](user_input/README.md) - Reads user button presses, mouse movements, touch events, clicks and calls all the required functions. Player-assist graphics (like direction worm is aiming) are sent to the renderer and not the state.
+   * [**State Manipulator**](state_manipulator/README.md) - Uses the currect game state and the new input to calculate the next state. Here will be the character-to-map interactions, applying physics to movement, etc.
+   * [**Data Management**](data_management/README.md) - Can be simple, can be complicated, but overall must allow user input to smoothly modify the state. i.e. lag from server to client should be nulled.
+   * [**Firebase**]((firebase/README.md)) - single point which all players communicate with
+   * [**Renderer**](rederer/README.md) - Uses the state to draw the scene to the webpage
   
    **Vlad**: I'm a bit concerned about the backend, trying to write files on the server depends of service etc.. and can results in buggs and errors. I've worked with JSON and PHP and it's easy. Agree with string being sent to database and string being called from database in function of game id. Straight forward. Reading a file will be slow for the server if using a small homemade one. Not trivial setup.
 
