@@ -3,7 +3,7 @@
 
 ## Status Updates
 
-[click here](status/README.md)
+[click here](status)
 
 ## High Level Discussions
 

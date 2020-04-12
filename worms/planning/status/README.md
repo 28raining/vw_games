@@ -1,5 +1,14 @@
 # Updates Page
 
+## April 12th 2020
+
+1. Wills Plan
+   1. Get work enviornment up and running (webpack, typescripts, svg.js)
+   2. Stop using API-key for firebase, this is bad! Instead, all requests must come from www.will-kelsey.com
+   3. Create HTML homepage, allow user to create game id. Show list of existing game ID's. Change page to game page on req.
+   4. On game page draw a single contour, 1 worm per player
+   5. Arrow presses to move the worm left or right along the contour
+
 ## April 4th 2020
 
 1. **Regarding back-end**
