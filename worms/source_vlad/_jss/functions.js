@@ -1,4 +1,3 @@
-
 //if worms exist in savestate, position, re-generate if gamesave not existant
 function do_worm(){
 }
