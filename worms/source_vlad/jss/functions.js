@@ -1,5 +1,5 @@
 //if worms exist in savestate, position, re-generate if gamesave not existant
-function do_player(in_x,in_y){
+function do_player(int_x,int_y){
   var player = new worm("", int_x, int_y, 100, 1);
   console.log(int_x + " " + int_y);
   return player;
@@ -18,7 +18,7 @@ function do_savestate(){
 
   }else{
     do_canvas(1000,1000);
-    var player1 = do_worm(Math.floor(Math.random() * 1001),Math.floor(Math.random() * 1001));
+    var player1 = do_player(Math.floor(Math.random() * 1001),Math.floor(Math.random() * 1001));
   }
 }
 
@@ -26,7 +26,7 @@ function do_savestate(){
 
 
 
-function generate_projectile_trajectory(in_x,in_y,strength){
+function generate_projectile_trajectory(int_x,int_y,strength){
 }
 
 function canvas_resize(){
