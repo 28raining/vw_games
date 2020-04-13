@@ -31,13 +31,13 @@ export function initialise_listeners() {
     }
 }
 
-var readCoords = firebase_database.ref('gameinfo/' + game_id + '/coords');  //Which data to read
+// var readCoords = firebase_database.ref('gameinfo/' + game_id + '/coords');  //Which data to read
 
-readCoords.on('value', function(snapshot: any) { //executes every time the value changes
-  let result  = snapshot.val();
-  console.log(result);
-  x_coord = result['x'];
-  y_coord = result['y'];
-  document.getElementById('BlackBox').style.right = String(300 - 10*x_coord) + "px";
-  document.getElementById('BlackBox').style.bottom = String(300 + 10*y_coord) + "px";
-});
+// readCoords.on('value', function(snapshot: any) { //executes every time the value changes
+//   let result  = snapshot.val();
+//   console.log(result);
+//   x_coord = result['x'];
+//   y_coord = result['y'];
+//   document.getElementById('BlackBox').style.right = String(300 - 10*x_coord) + "px";
+//   document.getElementById('BlackBox').style.bottom = String(300 + 10*y_coord) + "px";
+// });
