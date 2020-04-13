@@ -1,6 +1,6 @@
 //if worms exist in savestate, position, re-generate if gamesave not existant
 function do_player(int_x,int_y){
-  var player = new worm("", int_x, int_y, 100, 1);
+  player = new Worm("", int_x, int_y, 100, 1);
   console.log(int_x + " " + int_y);
   return player;
 }

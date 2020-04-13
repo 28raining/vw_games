@@ -1,10 +1,4 @@
-var worm = {
-  type:"",
-  pos_x:0,
-  pox_y:0,
-  life:100,
-  speed:1
-};
+
 
 var canvas = {
   length_x:1000,
@@ -20,3 +14,14 @@ var projectile = {
   speed:0, //normalised to 1
   direction:0 //in degrees
 };
+
+
+class Worm {
+  constructor(type, pos_x, pos_y, life, speed) {
+    this.type = type;
+    this.pos_x = pos_x;
+    this.pos_y = pos_y;
+    this.life = life;
+    this.speed = speed;
+  }
+}
