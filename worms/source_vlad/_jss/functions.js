@@ -16,7 +16,6 @@ function do_savestate(){
 
 
 
-
 function generate_projectile_trajectory(in_x,in_y,strength){
 }
 
