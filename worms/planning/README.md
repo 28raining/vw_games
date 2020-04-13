@@ -27,9 +27,12 @@ There will be at least 1x .js file per structure item.
   
 3. **Tools**
 Everything is possible with Vanilla JS and our bare hands. If we use tools, we'll be more productive and our final prodcut will perform better. **Note** It's good for us to follow the modern best practices
-3.1. Webpack - Makes it easier / possible to create many different js files. [](https://victorzhou.com/blog/why-you-should-use-webpack/)
-3.2. TypeScript - We're working as a team, which means we should try not to commit things which can break the other person. TypeScript will help us rookies write less buggy code. But... you have to compile it to .js before you can use it. We already have to compile though to make WebPack work. TypeScript is the future.[](https://www.google.com/search?q=is+typescript+worth+it)
-3.3 SVG.js - Using a library to draw SVG will speed us up, and will speed up our final product. Expect to use SVG for landscapes, where it can randomly be "redrawn" after weapon impact
+   3.1. Webpack - Makes it easier / possible to create many different js files. [](https://victorzhou.com/blog/why-you-should-use-webpack/)
+      A note about webpack debug [](https://blog.jakoblind.no/debug-webpack-app-browser/)
+      A note about webpack and css [](https://blog.jakoblind.no/css-modules-webpack/)
+   3.2. TypeScript - We're working as a team, which means we should try not to commit things which can break the other person. TypeScript will help us rookies write less buggy code. But... you have to compile it to .js before you can use it. We already have to compile though to make WebPack work. TypeScript is the future.[](https://www.google.com/search?q=is+typescript+worth+it)
+      [Typescript in 5 minutes] (https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
+   3.3 SVG.js - Using a library to draw SVG will speed us up, and will speed up our final product. Expect to use SVG for landscapes, where it can randomly be "redrawn" after weapon impact
 
 4. **Graphics library**
 Use SVG (2D)
