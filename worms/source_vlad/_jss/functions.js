@@ -1,35 +1,56 @@
 
 //if worms exist in savestate, position, re-generate if gamesave not existant
-do_worm(){
+function do_worm(){
 }
 
 //if canvas exists in savestate re-build
-do_canvas(){
+function do_canvas(){
 }
 
 //generate game save array in order to be able to rebuild a canvas with features
 //to be loaded to server once move is finished
-do_savestate(){
+//equivalent to new game
+function do_savestate(){
 }
 
 
 
-new_game(){
+
+
+
+function generate_projectile_trajectory(in_x,in_y,strength){
 }
 
-load_game(){
+function canvas_resize(){
 }
 
-update_game(){
+function keystroke_listen(){
 }
 
+function checkKeycode(event) {
+    // handling Internet Explorer stupidity with window.event
+    // @see http://stackoverflow.com/a/3985882/517705
+    var keyDownEvent = event || window.event,
+        keycode = keyDownEvent.key || keyDownEvent.keyCode || keyDownEvent.code;
 
-
-generate_projectile_trajectory(){
+		if (keycode === 'ArrowRight' || keycode === 'Right' || keycode === '39'){
+			console.log("right");
+		}
+		if (keycode === 'ArrowLeft' || keycode === 'Left' || keycode === '37'){
+			console.log("left");
+		}
+    if (keycode === 'ArrowUp' || keycode === 'Up' || keycode === '38'){
+      console.log("up");
+    }
+    if (keycode === 'ArrowDown' || keycode === 'Down' || keycode === '40'){
+      console.log("down");
+    }
+    if (keycode === 'a' || keycode === 'a' || keycode === '65'){
+      console.log("aim");
+    }
+    if (keycode === 'Space' || keycode === 'Space' || keycode === '32'){
+      console.log("jump");
+    }
+    //return false; <-cancels all other typed in keys -> contact form error
 }
-
-canvas_resize(){
-}
-
-keystroke_listen(){
-}
+document.onkeydown = checkKeycode;
