@@ -46,7 +46,7 @@ function checkKeycode(event) {
     if (keycode === 'a' || keycode === 'a' || keycode === '65'){
       console.log("aim");
     }
-    if (keycode === 'Space' || keycode === 'Space' || keycode === '32'){
+    if (keycode === 'Space' || keycode === ' ' || keycode === '32'){
       console.log("jump");
     }
     //return false; <-cancels all other typed in keys -> contact form error
