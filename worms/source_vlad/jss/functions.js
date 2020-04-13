@@ -1,11 +1,10 @@
 //if worms exist in savestate, position, re-generate if gamesave not existant
 function do_player(int_x,int_y){
   player = new Worm("", int_x, int_y, 100, 1);
-  console.log(int_x + " " + int_y);
   return player;
 }
 
-//if canvas exists in savestate re-build
+//if canvas exists in savestate re-build, load new one otherwise
 function do_canvas(w_x, w_y){
 }
 
