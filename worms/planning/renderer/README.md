@@ -9,4 +9,5 @@ Reads the state and draws everything to the screen. Run at 30fps.
 2. Animate worm
    1. If worm is 'moving', the worm should wriggle
 3. Draw aim arrow
-   1. Information is sent from user-input controller
+   1. Information is sent from user-input file, not from database
+4. Draw different weapons
