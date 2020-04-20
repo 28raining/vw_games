@@ -17,7 +17,8 @@ As a start, let's first aim to build the *worm with baseball bat*. There's many 
 7. Add health meter and name above each worm
 8. Add game-over graphics + animations
 9. Add usernames and a game lobby - let people join a lobby then one person can take them into the game
-
+10. Add a favicon to get rid of that error
+    
 ## April 12th 2020
 
 1. Wills Plan
