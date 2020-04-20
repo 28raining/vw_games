@@ -4,10 +4,10 @@
 
 1. Wills Plan
    1. Get work enviornment up and running (webpack, typescripts, svg.js) -> Done
-   2. Stop using API-key for firebase, this is bad! Instead, all requests must come from www.will-kelsey.com -> Add API credentials check that requests can only come frome this URL
-   3. Create HTML homepage, allow user to create game id. Show list of existing game ID's. Change page to game page on req. -> Game ID created, user now has somewhere to r+w data
-   4. On game page draw a single contour, 1 worm per player
-   5. Arrow presses to move the worm left or right along the contour
+   2. Stop using API-key for firebase, this is bad! Instead, all requests must come from www.will-kelsey.com -> Add API credentials check that requests can only come frome this URL -> Done (but doesn't seem to work??)
+   3. Create HTML homepage, allow user to create game id. Show list of existing game ID's. Change page to game page on req. -> Game ID created, user now has somewhere to r+w data -> Done
+   4. On game page draw a single contour, 1 worm per player -> Done (1 worm only)
+   5. Arrow presses to move the worm left or right along the contour -> Done
 
 ## April 4th 2020
 
