@@ -1,5 +1,23 @@
 # Updates Page
 
+## April 19th 2020
+
+*Finally got the infastructure up and running well!!*
+Had to make decisions about database, refresh-rate, drawing method (chose canvas)
+And dealt with several weird things, like using images in typescript and firestore limitations.
+
+As a start, let's first aim to build the *worm with baseball bat*. There's many tasks here!
+
+1. Draw the 2nd, 3rd, Nth worm which is controlled by different users
+2. Add jumping to the worm (requires physics math) (spacebar)
+3. Implement sprites or similar - a method to animate the worm. Prefer SVG, because then 1x sprite can be easily re-coloured (may want to use library for sprites? Makes it look simple)
+4. Sprite for the baseball bat, do animation
+5. Add a weapon selector and let user chose nothing or baseball bat
+6. What happens when the worm is hit by the bat? Full animation needed
+7. Add health meter and name above each worm
+8. Add game-over graphics + animations
+9. Add usernames and a game lobby - let people join a lobby then one person can take them into the game
+
 ## April 12th 2020
 
 1. Wills Plan
