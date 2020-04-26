@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = {
   entry: {
-	  "bundle": './src/index.ts'
+	  "bundle": './src/ts/index.ts'
 	// "bundle.min": './src/index.ts'
   },
   module: {
@@ -25,7 +25,7 @@ module.exports = {
         use: [
           'file-loader',
         ],
-      },
+      },      
     ]
   },
   resolve: {
@@ -42,6 +42,10 @@ module.exports = {
     new HtmlWebpackPlugin({  // Also generate a test.html
       filename: 'index.html',
       template: 'src/index.html'
+    }),
+    new HtmlWebpackPlugin({ 
+      filename: 'newpage.html',
+      template: 'src/newpage.html'
     })
   ]
 };

@@ -1,6 +1,6 @@
-import img_caterpillar_left from './images/caterpillar-left.svg'
-import img_caterpillar_right from './images/caterpillar-right.png'
-import img_background from './images/desert.jpg'
+import img_caterpillar_left  from '../images/caterpillar-left.svg'
+import img_caterpillar_right from '../images/caterpillar-right.png'
+import img_background from '../images/desert.jpg'
 import {generateNextState} from './gameState'
 import * as gb from './gameGlobals'
 

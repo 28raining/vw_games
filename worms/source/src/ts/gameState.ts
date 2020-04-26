@@ -15,6 +15,7 @@ export function updateGameState (state) {
 //This could update at any rate, but we'll use the frame rate to be optimal.
 //Because firestore uses local cache, the write->update time is v small.
 // some reference to here https://developer.mozilla.org/en-US/docs/Games/Tutorials/2D_Breakout_game_pure_JavaScript/Paddle_and_keyboard_controls
+thisPlayer = gb.localState.playerNum
 export function generateNextState (overide=false) {
     let next_x = gameGlobals.gameState.x;
     let update_db = false;

@@ -1,13 +1,37 @@
 <head>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
 </head>
 <body>
 
-    <input type="button" id="CreateNewGame" value="Click here to create new game"></input>
-    <p></p>
+    <nav class="navigation">
+        <section class="container">
+                <div class="navigation-title">VW GAMES</div>
+        </section>
+    </nav>
+      
+    <section class="container">
+        <div class="row">
+          <div class="column column-40">
+            <input type="button" id="CreateNewGame" value="Create a new game"></input>
+          </div>
+          <div class="colum column-40">
+            <label for="enterGameID">Or, enter a game ID </label>
+          </div>
+          <div class="colum column-10">
+            <input type="number" id="enterGameID"></input>
+          </div>
+          <div class="colum column-10">
+            <input type="button" value="Join Game" id="joinGameReq"></input>
+          </div>
+        </div>
 
-    <label for="enterGameID">Enter a game ID: </label><input type="number" id="enterGameID"></input><input type="button" value="Join Game" id="joinGameReq"></input>
+        <div class="row">
+            <div class="column column-50">
+                <p>Your game ID: <strong><div id="gameID">N/A</strong>
+            </div>
+        </div>
+    </section>
 
-    <p></p>
     <!-- <div id="gameBackdrop"></div>
 
     <div id="BlackBox"></div>

@@ -1,5 +1,9 @@
 # Updates Page
 
+## April 26th
+
+- Started using milligram to stype all the buttons very nicely and easily. Looked at using bootstrap but it is very heavy. This article persuaded me: https://designmodo.com/frontend-web-dev-frameworks/
+
 ## April 19th 2020
 
 *Finally got the infastructure up and running well!!*
@@ -18,7 +22,7 @@ As a start, let's first aim to build the *worm with baseball bat*. There's many 
 8. Add game-over graphics + animations
 9. Add usernames and a game lobby - let people join a lobby then one person can take them into the game
 10. Add a favicon to get rid of that error
-    
+
 ## April 12th 2020
 
 1. Wills Plan
