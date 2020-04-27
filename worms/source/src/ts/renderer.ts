@@ -19,7 +19,7 @@ import * as gb from './gameGlobals'
 // All variables below are in units of ms. framePeriod determins frame rate (50=20fps)
 var MyGame = {
     lastTick : 0,
-    framePeriod : 20,
+    framePeriod : 50,
     nextTick : 0
 }
 
@@ -44,6 +44,7 @@ function main( tFrame ) {
 export var myWorm;
 var myBackground;
 export var myContour;
+var worms = [];
 
 var canvas = <HTMLCanvasElement> document.getElementById("gameCanvas");
 
@@ -51,10 +52,21 @@ export function startGame() {
     myGameArea.start();
     myContour = new contour_component();
     myContour.createContour();
-    myWorm = new component(30, 30, img_caterpillar_left, img_caterpillar_right, 10, 120, "image");
     myBackground = new bg_component(960, 450, img_background, 0, 0);
     main(performance.now()); // Start the cycle. Performance gives current time in accurate precision
     console.log("updating game");
+}
+
+function add_player() {
+  generateWorms();
+  gb.localState.numPlayers = gb.gameGlobals.gameState.numPlayers;
+}
+
+function generateWorms () {
+  var i;
+  for (i=1; i<=gb.gameGlobals.gameState.numPlayers; i++) {
+    worms[i] = new component(30, gb.localState.wormHeight, img_caterpillar_left, img_caterpillar_right, 10, 120, "image");
+  }
 }
 
 var myGameArea = {
@@ -83,19 +95,19 @@ function component(width, height, src_left, src_right, x, y, type) {
     this.height = height;
     this.x = x;
     this.y = y;    
-    this.update = function() {
+    this.update = function(x, y) {
         let ctx = myGameArea.context;
         // if (gb.localState.lastMove == 'left') this.image.src = this.src_left;
         // else this.image.src = this.src_left;
         if (gb.localState.lastMove == 'left') {
             ctx.drawImage(this.image_left, 
-                gb.gameGlobals.gameState.x, 
-                gb.gameGlobals.gameState.y, 
+                x, 
+                y, 
                 this.width, this.height);
         } else {
           ctx.drawImage(this.image_right, 
-            gb.gameGlobals.gameState.x, 
-            gb.gameGlobals.gameState.y, 
+            x, 
+            y, 
             this.width, this.height); 
         }
     }
@@ -154,11 +166,18 @@ function contour_component () {
 
 function render() {
     if (gb.gameGlobals.gameID>0) { //don't try to write to db before joined a game
+      var i;
+      //check if a new player has joined
+      if (gb.gameGlobals.gameState.numPlayers > gb.localState.numPlayers) add_player();
       myGameArea.clear();
       // myBackground.newPos();    
       myBackground.update();
-      // myWorm.newPos();    
-      myWorm.update();
+      // myWorm.newPos();   
+      for (i=1; i<=gb.gameGlobals.gameState.numPlayers; i++) {
+        var player_index = 'player' + i;
+        worms[i].update(gb.gameGlobals.gameState[player_index].x,gb.gameGlobals.gameState[player_index].y);
+      } 
+
       myContour.update();
       generateNextState();
     } 

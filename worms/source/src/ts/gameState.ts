@@ -15,22 +15,24 @@ export function updateGameState (state) {
 //This could update at any rate, but we'll use the frame rate to be optimal.
 //Because firestore uses local cache, the write->update time is v small.
 // some reference to here https://developer.mozilla.org/en-US/docs/Games/Tutorials/2D_Breakout_game_pure_JavaScript/Paddle_and_keyboard_controls
-thisPlayer = gb.localState.playerNum
 export function generateNextState (overide=false) {
-    let next_x = gameGlobals.gameState.x;
+    // console.log(gameGlobals);
+    let thisPlayerNum = localState.playerNum;
+    let next_x = localState.x;
     let update_db = false;
     if (localState.moveLeft && ~localState.moveRight) {
         update_db = true;
-        next_x = gameGlobals.gameState.x - 1;
+        next_x = next_x - 1;
         localState.lastMove = 'left';
     } else if (localState.moveRight && ~localState.moveLeft) {
         update_db = true;
-        next_x = gameGlobals.gameState.x + 1;
+        next_x = next_x + 1;
         localState.lastMove = 'right';
     }
     next_x = Math.max(5, next_x); 
     next_x = Math.min(800, next_x); 
-    let next_y = myContour.contour[next_x] - myWorm.height;
+    localState.x = next_x;
+    let next_y = myContour.contour[next_x] - localState.wormHeight;
     if(update_db || overide) db.writeCoords(next_x, next_y);
 }
 

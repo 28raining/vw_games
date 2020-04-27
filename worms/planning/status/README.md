@@ -2,7 +2,8 @@
 
 ## April 26th
 
-- Started using milligram to stype all the buttons very nicely and easily. Looked at using bootstrap but it is very heavy. This article persuaded me: https://designmodo.com/frontend-web-dev-frameworks/
+- Started using milligram to stype all the buttons very nicely and easily. Looked at using bootstrap but it is very heavy. This article ranked it as best lightweight: https://designmodo.com/frontend-web-dev-frameworks/
+- Added multiple players + multiple worms. Involved creating a player number, restructering database, changing renderer so there can be an infinite number of worms.
 
 ## April 19th 2020
 
@@ -22,6 +23,7 @@ As a start, let's first aim to build the *worm with baseball bat*. There's many 
 8. Add game-over graphics + animations
 9. Add usernames and a game lobby - let people join a lobby then one person can take them into the game
 10. Add a favicon to get rid of that error
+11. If a player leaves then detect it and kill the worm
 
 ## April 12th 2020
 

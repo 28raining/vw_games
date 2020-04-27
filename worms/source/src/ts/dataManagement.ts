@@ -22,96 +22,70 @@ firebase.initializeApp(firebaseConfig);
 // Get a reference to the database service
 export var firebase_database = firebase.database();
 var gameRef;
+var playerRef;
 
 // Write some data
 export function writeCoords(x: number, y: number) {
-  gameRef.update({
-    x: x,
-    y: y
+  return playerRef.set({
+      x: x,
+      y: y
   })
-  .then(function(docRef) {
-    // console.log("Document written with ID: ");
-  })
-  .catch(function(error) {
-    console.error("Error adding document: ", error);
-  });
 }
 
 // Creates a new game number
 export function findNextGameID () {
   // Increment Ada's rank by 1.
   var incrementGameCount = firebase_database.ref('gameCounter/');
-  incrementGameCount.transaction(function(gameCount) {
+  return incrementGameCount.transaction(function(gameCount) {
     // If users/ada/rank has never been set, currentRank will be `null`.
     return (gameCount || 0) + 1;
-  }, function(error, committed, snapshot) {
-    if (error) {
-      console.log('(Game increment) Transaction failed abnormally!', error);
-    } else if (!committed) {
-      console.log('We aborted the transaction (gameCounter/ no exist?).');
-    } else {
-      console.log('gameCounterIncremented');
-    }
-    console.log("Game ID: ", snapshot.val());
-    //NOW MUST CREATE A NEW GAME
-    createGame(snapshot.val());
   });
 };
 
 // Gets a new player number. Uses transaction in case 2 players go at once
-export function getPlayerNumber (gameID : Number) {
+function getPlayerNumber (gameID : Number) {
+  console.log("Getting player number from " + gameID)
   // Increment Ada's rank by 1.
   var incrementPlayerNumber = firebase_database.ref("gameInfo/game_" + gameID + "/numPlayers");
-  incrementPlayerNumber.transaction(function(gameCount) {
+  return incrementPlayerNumber.transaction(function(gameCount) {
     // If users/ada/rank has never been set, currentRank will be `null`.
     return (gameCount || 0) + 1;
-  }, function(error, committed, snapshot) {
-    if (error) {
-      console.log('(Increase player number) Transaction failed abnormally!', error);
-    } else if (!committed) {
-      console.log('We aborted the transaction (gameInfo/game_' + gameID + '/numPlayers not exist?).');
-    } else {
-      console.log('numPlayers Incremented');
-    }
-    console.log("Starting game, received player number, numPlayers: ", snapshot.val());
-    //NOW MUST CREATE A NEW GAME
-    gb.localState.playerNum=snapshot.val();
-    gameStarting();
   });
-};
+}
 
 
 export function createGame (gameID) {
-  firebase_database.ref('gameInfo/game_' + gameID).set(gb.gameGlobals.gameState
-  , function(error) {
-      if (error) {
-        console.log('(Game create) Transaction failed abnormally!', error);
-      } else {
-        joinGame (gameID)
-      }
-  });
+  return firebase_database.ref('gameInfo/game_' + gameID).set(gb.gameGlobals.gameState);
 }
 
 // Checks if a game exists
 export function joinGame (gameID) {
   // var userId = firebase.auth().currentUser.uid;
   return firebase_database.ref('gameInfo/game_' + gameID).once('value').then(function(snapshot) {
+    //After reading the game state, check it exists
     if (snapshot.val()) {
       gameRef = firebase_database.ref('gameInfo/game_' + gameID);
-      //game does exist 
+      //game does exist. Get a player number, subscribe to updates, and start the game
       gb.gameGlobals.gameID = gameID
-      //subscribe to updates from this page
-      gameRef.on('value', function(snapshot) {
-        updateGameState(snapshot.val());
-      });
-      getPlayerNumber(gameID);
-    } else console.log('Game doesnt exist')
+      getPlayerNumber(gameID).then(function(tx_result) {
+          console.log("Received player number, numPlayers: ", tx_result.snapshot.val());
+          playerRef = firebase_database.ref('gameInfo/game_' + gameID + '/player' + tx_result.snapshot.val());
+          gb.localState.playerNum = tx_result.snapshot.val();
+          //write some initial data to this record, then continue
+          writeCoords(0,0).then(function() {
+            //subscribe to updates from this page
+            gameRef.on('value', function(snapshot) {
+              updateGameState(snapshot.val());
+            });
+            gameStarting();
+          });
+      }).catch(function(error) {
+          console.log('(Increase player number) Transaction failed abnormally!', error);
+      }) ;
+    } else console.log('Game ID doesnt exist')
     // var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
     // ...
   });
 
 }
 
-export function stateUpdate(data) {
-  updateGameState(data);
-}

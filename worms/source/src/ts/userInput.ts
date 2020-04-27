@@ -21,16 +21,34 @@ function join_game(gameID : Number) {
     db.joinGame(gameID);
 }
 
-export function gameStarting(){
+export function gameStarting() {
+    //Create some player information for me
+    document.getElementById('gameID').innerHTML = "Your game ID is: <strong>"+ gameGlobals.gameID +"</strong>";
     startGame();
     //update the state once. State will (probably) remain untouched until there is some user input
-    generateNextState(true);
+    // generateNextState(true);
+
 }
 
 function create_new_game() {
     console.log("trying to create new game");
-    db.findNextGameID();    //will join and start the game after finding ID
+    //finds next available gameID
+    db.findNextGameID().then(function(docref) {
+        let gameID = docref.snapshot.val();
+        console.log("Got new game ID: ", gameID);
+        //If succesfully got a new ID, then createGame with that ID
+        db.createGame(gameID).then(function(gameDocRef){
+            //If succesfully created a game state in the DB, join this game
+            db.joinGame (gameID)
+        }).catch(function(error) {
+            console.log('(Game create) Transaction failed abnormally!', error);
+        })
+    }).catch(function(error) {
+        console.log('(Game increment) Transaction failed abnormally!', error);
+    })
 }
+
+
 
 function keyDownHandler(e) {
     if(e.key == "Right" || e.key == "ArrowRight") {
