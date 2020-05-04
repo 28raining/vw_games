@@ -32,7 +32,7 @@ module.exports = {
     extensions: [ ".tsx", ".ts", ".js" ]
   },
   externals: {
-    firebase: 'firebase'
+    // firebase: 'firebase'
   },
   output: {
     filename: '[name].js',

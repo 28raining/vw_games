@@ -1,9 +1,15 @@
 # Updates Page
 
+## May 3rd
+
+- Added jumping. Added a gravity function. Not really sure why the gravity looks unrealistic, something to do with the distance between pixels and the real distance. Maybe we can know find pixels-per-inch and literally map pixles to inches?. Window.devicePixelRatio. This might actually be needed to make canvas look good on all devices. *completed this*
+- Pixi could be good in the future for more complex anmiation which runs smoother. For now I think everything can be done on the canvas without much complexity. Or three.js, use tlgf to easily modify 3d objects. tlgf have anchors so you can modify 3d objects in the browser. v cool!
+
 ## April 26th
 
 - Started using milligram to stype all the buttons very nicely and easily. Looked at using bootstrap but it is very heavy. This article ranked it as best lightweight: https://designmodo.com/frontend-web-dev-frameworks/
 - Added multiple players + multiple worms. Involved creating a player number, restructering database, changing renderer so there can be an infinite number of worms.
+- Probably should use spectre or mustard css framework, much more features than milligram
 
 ## April 19th 2020
 
@@ -13,9 +19,9 @@ And dealt with several weird things, like using images in typescript and firesto
 
 As a start, let's first aim to build the *worm with baseball bat*. There's many tasks here!
 
-1. Draw the 2nd, 3rd, Nth worm which is controlled by different users
-2. Add jumping to the worm (requires physics math) (spacebar)
-3. Implement sprites or similar - a method to animate the worm. Prefer SVG, because then 1x sprite can be easily re-coloured (may want to use library for sprites? Makes it look simple)
+1. Draw the 2nd, 3rd, Nth worm which is controlled by different users -> wk done
+2. Add jumping to the worm (requires physics math) (spacebar) -> wk done
+3. Implement sprites or similar - a method to animate the worm. Prefer SVG, because then 1x sprite can be easily re-coloured (may want to use library for sprites? Makes it look simple) -> wk - no sprites but use SVG to create paths, then use Canvas to draw and modify the paths. Not bad!. 50% done (literally 50% of the worm)
 4. Sprite for the baseball bat, do animation
 5. Add a weapon selector and let user chose nothing or baseball bat
 6. What happens when the worm is hit by the bat? Full animation needed

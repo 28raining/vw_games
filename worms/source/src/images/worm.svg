@@ -1,0 +1,54 @@
+<!-- Drawn using this site: https://vectr.com/wiwyam/g19jGPmEMY-->
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid meet" viewBox="0 0 640 640" width="640" height="640">
+   <defs>
+      <path d="M191.67 372.87L153.15 368.28L153.15 331.49L286.67 310.8L286.67 347.59L191.67 372.87Z" id="svg_worm_mouth"></path>
+      <path d="M96.67 166.87L148.74 330.34L188.97 360.23L286.67 310.8L261.38 98.16L233.79 92.41L102.76 145.29L96.67 166.87Z" id="svg_worm_head"></path>
+      <path d="M215.4 136.09L234.94 156.78L239.54 263.68L215.4 270.57L188.97 261.38L168.28 201.61L176.32 151.03L215.4 136.09Z" id="svg_worm_eye_right"></path>
+      <path d="M114.63 203.53L114.63 173.48L156.78 151.03L191.67 276.32L178.62 291.26L145.29 279.77C131.94 246.57 121.71 221.16 114.63 203.53" id="svg_worm_eye_left"></path>
+      <path d="M192.82 369.43L274.02 333.79L287.82 346.44L287.82 436.09L353.33 488.97L406.21 456.78L461.38 506.21L461.38 528.05L187.82 531.49L154.3 517.7L139.54 483.22L169.43 398.16L154.3 365.98L192.82 369.43Z" id="svg_worm_tail"></path>
+      <path d="M157.36 215.4L172.66 215.4L183.79 246.6L172.66 259.08L157.36 231.63L157.36 215.4Z" id="svg_worm_pupil_left"></path>
+      <path d="M184.83 249.64L198.26 235.76L199.98 215.15L185.81 205.31L172.2 215.4L184.83 249.64Z" id="svg_worm_pupil_right"></path>
+   </defs>
+   <g>
+      <g>
+         <g>
+            <use xlink:href="#svg_worm_mouth" opacity="1" fill="#f99d52" fill-opacity="1"></use>
+         </g>
+         <g>
+            <use xlink:href="#a1cBeElKCC" opacity="1" fill="#fccaa2" fill-opacity="1"></use>
+            <g>
+               <use xlink:href="#a1cBeElKCC" opacity="1" fill-opacity="0" stroke="#ffa257" stroke-width="2" stroke-opacity="1"></use>
+            </g>
+         </g>
+         <g>
+            <use xlink:href="#svg_worm_eye_right" opacity="1" fill="#ffffff" fill-opacity="1"></use>
+            <g>
+               <use xlink:href="#svg_worm_eye_right" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="2" stroke-opacity="1"></use>
+            </g>
+         </g>
+         <g>
+            <use xlink:href="#svg_worm_eye_left" opacity="1" fill="#ffffff" fill-opacity="1"></use>
+            <g>
+               <use xlink:href="#svg_worm_eye_left" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="2" stroke-opacity="1"></use>
+            </g>
+         </g>
+         <g>
+            <use xlink:href="#svg_worm_tail" opacity="1" fill="#fccaa2" fill-opacity="1"></use>
+            <g>
+               <use xlink:href="#svg_worm_tail" opacity="1" fill-opacity="0" stroke="#fccaa2" stroke-width="1" stroke-opacity="1"></use>
+            </g>
+         </g>
+         <g>
+            <use xlink:href="#svg_worm_pupil_left" opacity="1" fill="#83350d" fill-opacity="1"></use>
+            <g>
+               <use xlink:href="#svg_worm_pupil_left" opacity="1" fill-opacity="0" stroke="#fccaa2" stroke-width="0" stroke-opacity="1"></use>
+            </g>
+         </g>
+         <g>
+            <use xlink:href="#svg_worm_pupil_right" opacity="1" fill="#8c380d" fill-opacity="1"></use>
+         </g>
+      </g>
+   </g>
+</svg>

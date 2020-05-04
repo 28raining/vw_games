@@ -1,5 +1,5 @@
 import * as db from './dataManagement'
-import {gameGlobals, localState} from './gameGlobals'
+import * as gb from './gameGlobals'
 import {startGame} from './renderer'
 import {generateNextState} from './gameState'
 
@@ -23,7 +23,8 @@ function join_game(gameID : Number) {
 
 export function gameStarting() {
     //Create some player information for me
-    document.getElementById('gameID').innerHTML = "Your game ID is: <strong>"+ gameGlobals.gameID +"</strong>";
+    document.getElementById('gameID').innerHTML = "Your game ID is: <strong>"+ gb.gameGlobals.gameID +"</strong>";
+    document.getElementById('gameCanvas').focus();
     startGame();
     //update the state once. State will (probably) remain untouched until there is some user input
     // generateNextState(true);
@@ -52,19 +53,26 @@ function create_new_game() {
 
 function keyDownHandler(e) {
     if(e.key == "Right" || e.key == "ArrowRight") {
-        localState.moveRight = true;
+        gb.localState.moveRight = true;
     }
     else if(e.key == "Left" || e.key == "ArrowLeft") {
-        localState.moveLeft = true;
+        gb.localState.moveLeft = true;
+    }
+    else if(e.key == " " || e.key == "Spacebar") {
+        console.log('jump!')
+        gb.localState.upVelocity = 3; //unit m/s. Will literally move this speed on the screen
     }
 }
 
 function keyUpHandler(e) {
     if(e.key == "Right" || e.key == "ArrowRight") {
-        localState.moveRight = false;
+        gb.localState.moveRight = false;
     }
     else if(e.key == "Left" || e.key == "ArrowLeft") {
-        localState.moveLeft = false;
+        gb.localState.moveLeft = false;
+    }
+    else if(e.key == " " || e.key == "Spacebar") {
+        event.preventDefault();
     }
 }
 

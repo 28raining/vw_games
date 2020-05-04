@@ -1,4 +1,5 @@
 // This import loads the firebase namespace.
+require('firebase')
 import * as firebase from 'firebase';
 import {updateGameState} from './gameState';
 import * as gb from './gameGlobals';
@@ -26,6 +27,8 @@ var playerRef;
 
 // Write some data
 export function writeCoords(x: number, y: number) {
+  gb.localState.x = x;
+  gb.localState.y = y;
   return playerRef.set({
       x: x,
       y: y

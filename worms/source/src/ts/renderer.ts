@@ -16,10 +16,9 @@ import * as gb from './gameGlobals'
 *                   It is just a generic example function that you might have added.
 */
 
-// All variables below are in units of ms. framePeriod determins frame rate (50=20fps)
+// All variables below are in units of ms. 
 var MyGame = {
     lastTick : 0,
-    framePeriod : 50,
     nextTick : 0
 }
 
@@ -35,7 +34,7 @@ function main( tFrame ) {
     // Note: As we mention in summary, you should keep track of how large numTicks is.
     // If it is large, then either your game was asleep, or the machine cannot keep up.
     if (tFrame > MyGame.nextTick) {
-      MyGame.nextTick = tFrame + MyGame.framePeriod;
+      MyGame.nextTick = tFrame + gb.frame_period;
       render(); //fixed frame rate. If not fixed, will have to pass the current time into render
     }
   }
@@ -65,7 +64,7 @@ function add_player() {
 function generateWorms () {
   var i;
   for (i=1; i<=gb.gameGlobals.gameState.numPlayers; i++) {
-    worms[i] = new component(30, gb.localState.wormHeight, img_caterpillar_left, img_caterpillar_right, 10, 120, "image");
+    worms[i] = new new_worm_component(30, gb.localState.wormHeight, img_caterpillar_left, img_caterpillar_right, 10, 120, "image");
   }
 }
 
@@ -75,13 +74,57 @@ var myGameArea = {
         canvas.width = 960;
         canvas.height = 450;
         this.frameNo = 0;
+        this.context.translate(0, 0);
         },
     clear : function() {
         this.context.clearRect(0, 0, canvas.width, canvas.height);
-    }
+    },
 }
 
-function component(width, height, src_left, src_right, x, y, type) {
+function new_worm_component(width, height, src_left, src_right, x, y, type) {
+  this.height = 30;
+  this.offset_x = 191;
+  this.offset_y = 280;
+  this.worm_mouth = new Path2D("M191.67 372.87L153.15 368.28L153.15 331.49L286.67 310.8L286.67 347.59L191.67 372.87Z");
+  this.worm_head = new Path2D("");
+  this.worm_eye_right = new Path2D("");
+  this.worm_eye_left = new Path2D("");
+  this.worm_tail = new Path2D("M192.82 369.43L274.02 333.79L287.82 346.44L287.82 436.09L353.33 488.97L406.21 456.78L461.38 506.21L461.38 528.05L187.82 531.49L154.3 517.7L139.54 483.22L169.43 398.16L154.3 365.98L192.82 369.43Z");
+  this.worm_pupil_left = new Path2D("");
+  this.worm_pupil_right = new Path2D("");
+  this.walk_frame=0;
+  this.update = function(x, y) {
+    let walk=false;
+    if (gb.localState.moveLeft || gb.localState.moveRight) walk = true;
+    let ctx = myGameArea.context;
+    ctx.save();
+    let y_scale = this.height / 250;
+    let flip = 1;
+    let squeeze = 1;
+    if (gb.localState.lastMove == 'right') flip = -1;
+    if (walk==true || this.walk_frame>0) {
+      //walk animation takes 500ms. 250ms squeeze, 250ms relax
+      let num_frames = Math.floor(250 / gb.frame_period);
+      let max_squeeze = 0.7;
+      if (this.walk_frame > num_frames) {
+        squeeze = 1.0 - ((1.0 - max_squeeze) * (2*num_frames - this.walk_frame)/num_frames);
+      } else {
+        squeeze = 1.0 - ((1.0 - max_squeeze) * this.walk_frame / num_frames);
+      }
+      this.walk_frame = (this.walk_frame + 1) % (2*num_frames);
+      // console.log(squeeze,this.walk_frame);
+    }
+
+    let x_scale = y_scale * squeeze;
+    ctx.scale(x_scale*flip, y_scale);
+    ctx.translate(((x/x_scale)*flip-this.offset_x), (y/y_scale)-this.offset_y);
+    ctx.fill(this.worm_tail);
+    ctx.restore();
+
+  }
+}
+
+function worm_component(width, height, src_left, src_right, x, y, type) {
     this.type = type;
     if (type == "image") {
         this.image_left = new Image();
@@ -111,10 +154,6 @@ function component(width, height, src_left, src_right, x, y, type) {
             this.width, this.height); 
         }
     }
-    this.newPos = function() {
-        this.x += this.speedX;
-        this.y += this.speedY;        
-    }    
 }
 
 function bg_component(width, height, src, x, y) {
@@ -170,9 +209,7 @@ function render() {
       //check if a new player has joined
       if (gb.gameGlobals.gameState.numPlayers > gb.localState.numPlayers) add_player();
       myGameArea.clear();
-      // myBackground.newPos();    
       myBackground.update();
-      // myWorm.newPos();   
       for (i=1; i<=gb.gameGlobals.gameState.numPlayers; i++) {
         var player_index = 'player' + i;
         worms[i].update(gb.gameGlobals.gameState[player_index].x,gb.gameGlobals.gameState[player_index].y);

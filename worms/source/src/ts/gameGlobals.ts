@@ -15,5 +15,9 @@ export var localState = {
     moveLeft: false,
     lastMove: 'right',
     numPlayers: 0,
-    wormHeight: 30
+    wormHeight: 30,
+    upVelocity: 0   //positive velocity is up
 }
+
+export var frame_period = 30; //framePeriod determins frame rate (50=20fps)
+export var distance_unit = 5; //Amplify moves by this factor. Allows user to move around map faster
