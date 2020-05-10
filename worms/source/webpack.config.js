@@ -3,7 +3,8 @@ const path = require('path');
 
 module.exports = {
   entry: {
-	  "bundle": './src/ts/index.ts'
+	  "bundle": './src/ts/index.ts',
+	  "three": './src/ts/three.ts'
 	// "bundle.min": './src/index.ts'
   },
   module: {
@@ -41,11 +42,13 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({  // Also generate a test.html
       filename: 'index.html',
-      template: 'src/index.html'
+      template: 'src/index.html',
+      chunks: ['index']
     }),
     new HtmlWebpackPlugin({ 
       filename: 'newpage.html',
-      template: 'src/newpage.html'
+      template: 'src/newpage.html',
+      chunks: ['three']
     })
   ]
 };
