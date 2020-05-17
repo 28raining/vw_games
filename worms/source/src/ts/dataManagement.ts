@@ -31,7 +31,9 @@ export function writeCoords(x: number, y: number) {
   gb.localState.y = y;
   return playerRef.set({
       x: x,
-      y: y
+      y: y,
+      ml: gb.localState.moveLeft,
+      mr: gb.localState.moveRight
   })
 }
 
@@ -50,8 +52,8 @@ function getPlayerNumber (gameID : Number) {
   console.log("Getting player number from " + gameID)
   // Increment Ada's rank by 1.
   var incrementPlayerNumber = firebase_database.ref("gameInfo/game_" + gameID + "/numPlayers");
+  //uses transaction to increment and read game number.
   return incrementPlayerNumber.transaction(function(gameCount) {
-    // If users/ada/rank has never been set, currentRank will be `null`.
     return (gameCount || 0) + 1;
   });
 }
@@ -72,7 +74,7 @@ export function joinGame (gameID) {
       gb.gameGlobals.gameID = gameID
       getPlayerNumber(gameID).then(function(tx_result) {
           console.log("Received player number, numPlayers: ", tx_result.snapshot.val());
-          playerRef = firebase_database.ref('gameInfo/game_' + gameID + '/player' + tx_result.snapshot.val());
+          playerRef = firebase_database.ref('gameInfo/game_' + gameID + '/players/' + tx_result.snapshot.val());
           gb.localState.playerNum = tx_result.snapshot.val();
           //write some initial data to this record, then continue
           writeCoords(0,0).then(function() {

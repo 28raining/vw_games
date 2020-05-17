@@ -207,7 +207,6 @@ function render() {
     if (gb.gameGlobals.gameID>0) { //don't try to write to db before joined a game
       var i;
       //check if a new player has joined
-      if (gb.gameGlobals.gameState.numPlayers > gb.localState.numPlayers) add_player();
       myGameArea.clear();
       myBackground.update();
       for (i=1; i<=gb.gameGlobals.gameState.numPlayers; i++) {

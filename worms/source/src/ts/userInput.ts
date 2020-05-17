@@ -1,6 +1,6 @@
 import * as db from './dataManagement'
 import * as gb from './gameGlobals'
-import {startGame} from './renderer'
+import * as renderer from './three'
 import {generateNextState} from './gameState'
 
 //detect keypresses
@@ -25,7 +25,7 @@ export function gameStarting() {
     //Create some player information for me
     document.getElementById('gameID').innerHTML = "Your game ID is: <strong>"+ gb.gameGlobals.gameID +"</strong>";
     document.getElementById('gameCanvas').focus();
-    startGame();
+    renderer.startGame();
     //update the state once. State will (probably) remain untouched until there is some user input
     // generateNextState(true);
 
