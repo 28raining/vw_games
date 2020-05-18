@@ -1,5 +1,11 @@
 # Updates Page
 
+## May 17th
+- Fix the worms eyes. Maybe because they are a plane they are dissapearing?
+- Improve animation
+- Add baseball bat animation (press g!)
+-everything looks very bad, doing a proof of concept first
+
 ## May 3rd
 
 - Added jumping. Added a gravity function. Not really sure why the gravity looks unrealistic, something to do with the distance between pixels and the real distance. Maybe we can know find pixels-per-inch and literally map pixles to inches?. Window.devicePixelRatio. This might actually be needed to make canvas look good on all devices. *completed this*

@@ -61,6 +61,9 @@ function keyDownHandler(e) {
     else if(e.key == " " || e.key == "Spacebar") {
         console.log('jump!')
         gb.localState.upVelocity = 3; //unit m/s. Will literally move this speed on the screen
+    } 
+    else if (e.key == "g") {
+        gb.localState.baseball = true;
     }
 }
 
@@ -73,6 +76,9 @@ function keyUpHandler(e) {
     }
     else if(e.key == " " || e.key == "Spacebar") {
         event.preventDefault();
+    }
+    else if (e.key == "g") {
+        gb.localState.baseball = false;
     }
 }
 

@@ -14,6 +14,7 @@ export var localState = {
     playerNum: 0,
     moveRight: false,
     moveLeft: false,
+    baseball: false,
     lastMove: 'right',
     numPlayers: 0,
     wormHeight: 30,

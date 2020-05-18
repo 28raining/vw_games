@@ -75,12 +75,13 @@ function animate( tFrame ) {
         let player = gb.gameGlobals.gameState.players[obj.missing];
         obj.gltf.scene.position.set(player.x, player.y, 0);
         if (player.ml) {
-          obj.gltf.scene.rotation.copy(new THREE.Euler( Math.PI,Math.PI,0));
+          obj.gltf.scene.scale.x = -25;
           for (const anim of obj.gltf.animations) {
+            // console.log(anim);
             obj.mixer.clipAction(anim).play();
           }
         } else if (player.mr) {
-          obj.gltf.scene.rotation.copy(new THREE.Euler( Math.PI,0,0));
+          obj.gltf.scene.scale.x = 25;
           for (const anim of obj.gltf.animations) {
             obj.mixer.clipAction(anim).play();
           }
@@ -88,6 +89,17 @@ function animate( tFrame ) {
           for (const anim of obj.gltf.animations) {
             obj.mixer.clipAction(anim).stop();
           }
+        }
+
+        //Probaby best to store baseball bat as a seperate object in the obj array
+        if (gb.localState.baseball) {
+          obj.gltf.scene.traverse((o) => {
+            if (o.type === "Mesh") if(o.name == "baseballbat") (o as any).visible = true; 
+          });
+        } else {
+          obj.gltf.scene.traverse((o) => {
+            if (o.type === "Mesh") if(o.name == "baseballbat") (o as any).visible = false;
+          });
         }
       });
       gameState.generateNextState();
@@ -110,18 +122,22 @@ function animate( tFrame ) {
 //this runs asnychronously. It is in a seperate function so that 'missing' doesn't change before it's completed
 //If there was a for loop creating all the worms, the for loop would finish and then much later the async worm generation would finish.
 function gen_worm (missing: Number) {
-  myGameArea.GLTFloader.load("./worm.gltf", gltf => {                        
+  myGameArea.GLTFloader.load("./worm.glb", gltf => {                        
     const mixer = new THREE.AnimationMixer(gltf.scene);
     gltf.scene.scale.set(25, 25, 25);
-    gltf.scene.rotation.copy(new THREE.Euler( Math.PI, 0,0));
-    gltf.scene.position.set(2, 1, 0);
+    gltf.scene.rotation.copy(new THREE.Euler(Math.PI,0,0));
+    gltf.scene.position.set(0,0,0);
     myGameArea.scene.add(gltf.scene);
     worms.push({gltf,mixer,missing});
     var model = gltf.scene;
     var newMaterial = new THREE.MeshStandardMaterial({color: 0xff0000});
     model.traverse((o) => {
       if (o.type === "Mesh") {
-        if(o.name == "worm_body") (o as any).material = newMaterial;
+        // if(o.name == "eye_right") (o as any).material = newMaterial;
+        if(o.name == "baseballbat") (o as any).material = newMaterial;
+        if(o.name == "baseballbat") (o as any).visible = false;
+        // if(o.name == "eye_left") (o as any).material = newMaterial;
+        // if(o.name == "worm_body") (o as any).material = newMaterial;
       }
     });
   });
