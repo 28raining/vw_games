@@ -3,6 +3,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as gb from './gameGlobals'
 import * as gameState from './gameState'
 import imgBg from '../images/desert.jpg'
+import imgWood from '../images/wood_texture.jpg'
 import { ResolvePlugin } from 'webpack';
 
 var nextTick = 0;
@@ -10,6 +11,9 @@ var runRender = true;
 var objs = [];
 var worms = [];
 var delta = 0;
+var textures = {
+  wood : null
+};
 export var myContour;
 const canvas = <HTMLCanvasElement> document.getElementById("gameCanvas");
 // const canvas = canvas_dom.getContext("gameCanvas");
@@ -26,40 +30,39 @@ export function startGame() {
 var myGameArea = {
   renderer : new THREE.WebGLRenderer( {canvas: canvas, antialias: true}),
   scene : new THREE.Scene(),
-  camera : new THREE.OrthographicCamera(  0, gb.fulstrum_width, 0, gb.fulstrum_height, 1, 1000 ),
+  camera : new THREE.OrthographicCamera(  0, gb.fulstrum_width, 0, gb.fulstrum_height, 0, 1000 ),
   clock : new THREE.Clock(),
   GLTFloader : new GLTFLoader(),
+  textureLoader : new THREE.TextureLoader(),
   start : function() {
-        this.scene.add(new THREE.AmbientLight(0xffffff));
-        this.scene.background = new THREE.Color( 0xffffff  );
-        this.camera.position.z = 5;
-        //Setting up renderer
-        this.renderer.setSize( gb.canvas_width, gb.canvas_height);
-        //add background
-        const loader = new THREE.TextureLoader();
-        loader.load(
-          // resource URL
-          imgBg,
-          // onLoad callback
-          function ( bgTexture ) {
-            const canvasAspect = canvas.clientWidth / canvas.clientHeight;
-            const imageAspect = bgTexture.image ? bgTexture.image.width / bgTexture.image.height : 1;
-            console.log(canvasAspect, imageAspect)
-            const aspect = imageAspect / canvasAspect;
-            bgTexture.offset.x = aspect > 1 ? (1 - 1 / aspect) / 2 : 0;
-            bgTexture.repeat.x = aspect > 1 ? 1 / aspect : 1;
-            bgTexture.offset.y = aspect > 1 ? 0 : (1 - aspect) / 2;
-            bgTexture.repeat.y = aspect > 1 ? 1 : aspect;
-            myGameArea.scene.background = bgTexture;
-          },
-          // onProgress callback currently not supported
-          undefined,
-          // onError callback
-          function ( err ) {
-            console.error( 'An error happened.' );
-          }
-        );
+    this.scene.add(new THREE.AmbientLight(0xffffff));
+    this.scene.background = new THREE.Color( 0xffffff  );
+    //Setting up renderer
+    this.renderer.setSize( gb.canvas_width, gb.canvas_height);
+    //add background
+    this.textureLoader.load(
+      // resource URL
+      imgBg,
+      // onLoad callback
+      function ( bgTexture ) {
+        const canvasAspect = canvas.clientWidth / canvas.clientHeight;
+        const imageAspect = bgTexture.image ? bgTexture.image.width / bgTexture.image.height : 1;
+        console.log(canvasAspect, imageAspect)
+        const aspect = imageAspect / canvasAspect;
+        bgTexture.offset.x = aspect > 1 ? (1 - 1 / aspect) / 2 : 0;
+        bgTexture.repeat.x = aspect > 1 ? 1 / aspect : 1;
+        bgTexture.offset.y = aspect > 1 ? 0 : (1 - aspect) / 2;
+        bgTexture.repeat.y = aspect > 1 ? 1 : aspect;
+        myGameArea.scene.background = bgTexture;
+      },
+      // onProgress callback currently not supported
+      undefined,
+      // onError callback
+      function ( err ) {
+        console.error( 'An error happened.' );
       }
+    );
+  },
 }
 
 function animate( tFrame ) {
@@ -72,47 +75,50 @@ function animate( tFrame ) {
       delta = 5*myGameArea.clock.getDelta();
       worms.forEach(function(obj) {
         obj.mixer.update(delta);
-        let player = gb.gameGlobals.gameState.players[obj.missing];
-        obj.gltf.scene.position.set(player.x, player.y, 0);
+        let player = gb.gameGlobals.gameState.players[obj.player];
+        obj.gltf.scene.position.set(player.x, player.y, -300);
         if (player.ml) {
+          //Move Left
           obj.gltf.scene.scale.x = -25;
-          for (const anim of obj.gltf.animations) {
-            // console.log(anim);
-            obj.mixer.clipAction(anim).play();
-          }
+          obj.animations['walk_body'].play();
+          obj.animations['walk_head'].play();
+          obj.animations['walk_eyeright'].play();
+          obj.animations['walk_eyeleft'].play();
         } else if (player.mr) {
+          //Move Right
           obj.gltf.scene.scale.x = 25;
-          for (const anim of obj.gltf.animations) {
-            obj.mixer.clipAction(anim).play();
-          }
+          obj.animations['walk_body'].play();
+          obj.animations['walk_head'].play();
+          obj.animations['walk_eyeright'].play();
+          obj.animations['walk_eyeleft'].play();
         } else {
-          for (const anim of obj.gltf.animations) {
-            obj.mixer.clipAction(anim).stop();
-          }
+          //No movement
+          obj.animations['walk_body'].stop();
+          obj.animations['walk_head'].stop();
+          obj.animations['walk_eyeright'].stop();
+          obj.animations['walk_eyeleft'].stop();
         }
 
-        //Probaby best to store baseball bat as a seperate object in the obj array
-        if (gb.localState.baseball) {
-          obj.gltf.scene.traverse((o) => {
-            if (o.type === "Mesh") if(o.name == "baseballbat") (o as any).visible = true; 
-          });
-        } else {
-          obj.gltf.scene.traverse((o) => {
-            if (o.type === "Mesh") if(o.name == "baseballbat") (o as any).visible = false;
-          });
-        }
+        //Loop through all the weapons, draw which ever one is selected
+        gb.localState.weapons.forEach((val) => {
+          if (val.selected) {
+            obj.weapons[val.name].visible = true;
+            obj.animations[val.name].loop = THREE.LoopOnce;
+            obj.animations[val.name].timeScale = 2;
+            if (gb.localState.shoot && !gb.localState.shootDone) {
+              // gb.localState.shootDone = true;
+              obj.animations[val.name].play();
+              if (!obj.animations[val.name].enabled) obj.animations[val.name].reset();
+            }
+            // else obj.mixer.clipAction(obj.animations[val.name]).stop();
+          } else {
+            obj.weapons[val.name].visible = false;
+            // obj.mixer.clipAction(obj.animations[val.name]).stop();
+          }
+        });
+
       });
       gameState.generateNextState();
-
-      //Move the worms around
-      // for (j=1; j<=gb.gameGlobals.gameState.numPlayers; j++) {
-      //   var player_index = 'player' + j;
-      //   console.log('player' + j);
-      //   let obj = worms[j];
-      //   console.log(obj);
-      //   obj.mixer.update(delta);
-      //   obj.gltf.scene.position.set(gb.gameGlobals.gameState[player_index].x, gb.gameGlobals.gameState[player_index].y, 0);
-      // } 
 
       myGameArea.renderer.render( myGameArea.scene, myGameArea.camera );
     }
@@ -121,25 +127,77 @@ function animate( tFrame ) {
 
 //this runs asnychronously. It is in a seperate function so that 'missing' doesn't change before it's completed
 //If there was a for loop creating all the worms, the for loop would finish and then much later the async worm generation would finish.
-function gen_worm (missing: Number) {
+function gen_worm (player: Number) {
   myGameArea.GLTFloader.load("./worm.glb", gltf => {                        
     const mixer = new THREE.AnimationMixer(gltf.scene);
     gltf.scene.scale.set(25, 25, 25);
     gltf.scene.rotation.copy(new THREE.Euler(Math.PI,0,0));
-    gltf.scene.position.set(0,0,0);
+    gltf.scene.position.set(0,0,-300);
     myGameArea.scene.add(gltf.scene);
-    worms.push({gltf,mixer,missing});
     var model = gltf.scene;
     var newMaterial = new THREE.MeshStandardMaterial({color: 0xff0000});
+    //separate each weapon into an array
+    var weapons = {};
     model.traverse((o) => {
       if (o.type === "Mesh") {
-        // if(o.name == "eye_right") (o as any).material = newMaterial;
-        if(o.name == "baseballbat") (o as any).material = newMaterial;
-        if(o.name == "baseballbat") (o as any).visible = false;
-        // if(o.name == "eye_left") (o as any).material = newMaterial;
-        // if(o.name == "worm_body") (o as any).material = newMaterial;
+        if(o.name == "baseballbat") {
+          (o as any).material = textures['wood'];
+          (o as any).visible = false;
+          weapons["baseballbat"] = o;
+        }
       }
     });
+    //separate each animation into an array
+    var animations = {};
+    gltf.animations.forEach((val) => {
+      var anim = mixer.clipAction(val);
+      animations[val.name] = anim; 
+    });
+
+    //Create a health bar
+    //example code here view-source:https://threejs.org/examples/webgl_geometry_shapes.html
+    var roundedRectShape = new THREE.Shape();
+
+    ( function roundedRect( ctx, x, y, width, height, radius ) {
+
+      ctx.moveTo( x, y + radius );
+      ctx.lineTo( x, y + height - radius );
+      ctx.quadraticCurveTo( x, y + height, x + radius, y + height );
+      ctx.lineTo( x + width - radius, y + height );
+      ctx.quadraticCurveTo( x + width, y + height, x + width, y + height - radius );
+      ctx.lineTo( x + width, y + radius );
+      ctx.quadraticCurveTo( x + width, y, x + width - radius, y );
+      ctx.lineTo( x + radius, y );
+      ctx.quadraticCurveTo( x, y, x, y + radius );
+
+    } )( roundedRectShape, 0, 0, 50, 50, 10 );
+
+    var geometry = new THREE.ShapeBufferGeometry( roundedRectShape );
+
+    var mesh = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color: 0x8080f0, side: THREE.DoubleSide } ) );
+    mesh.position.set( 20, 20, -50 );
+    myGameArea.scene.add(mesh)
+
+
+    // lines
+    var lineShape = (function addLineShape( shape, color, x, y) {
+      shape.autoClose = true;
+
+      var points = shape.getPoints();
+
+      var geometryPoints = new THREE.BufferGeometry().setFromPoints( points );
+
+      // solid line
+
+      var line = new THREE.Line( geometryPoints, new THREE.LineBasicMaterial( { color: color } ) );
+      line.position.set( x, y, -50 );
+      return line;
+    })(roundedRectShape,0xF080f0,20,20);
+
+    myGameArea.scene.add(lineShape)
+
+
+    worms.push({gltf,mixer,player,animations,weapons});
   });
 }
 
@@ -147,9 +205,11 @@ function gen_worm (missing: Number) {
 export function add_player() {
   //first list the missing players
   let existingPlayers = [];
-  worms.forEach(obj => existingPlayers.push(obj.player));
+  worms.forEach(obj => existingPlayers.push(String(obj.player)));
+  // console.log ("Existing = " + existingPlayers);
+  // console.log ("server players = " + Object.keys(gb.gameGlobals.gameState.players));
   let difference = Object.keys(gb.gameGlobals.gameState.players).filter(x => !existingPlayers.includes(x));
-  console.log("Missing players: " + difference);
+  // console.log("Missing players: " + difference);
 
   //then add the missing players to the object (color them differently?)
   difference.forEach(missing => gen_worm(parseInt(missing)))
@@ -182,3 +242,27 @@ function contour_component () {
   //   ctx.stroke(); // Draw it
   // }
 }
+
+
+//load textures here... move somewhere better soon
+//load wood for the baseball bat
+
+textures['wood'] = new THREE.MeshBasicMaterial({
+  map: myGameArea.textureLoader.load(imgWood),
+});
+
+// myGameArea.textureLoader.load(
+//   // resource URL
+//   imgWood,
+//   // onLoad callback
+//   function ( woodTexture ) {
+//     textures['wood'] =  new THREE.MeshBasicMaterial({woodTexture});
+//     console.log('wood_loaded');
+//   },
+//   // onProgress callback currently not supported
+//   undefined,
+//   // onError callback
+//   function ( err ) {
+//     console.error( 'An error happened when loading wood texture' );
+//   }
+// );

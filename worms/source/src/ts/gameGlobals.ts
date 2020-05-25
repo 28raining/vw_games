@@ -14,11 +14,20 @@ export var localState = {
     playerNum: 0,
     moveRight: false,
     moveLeft: false,
-    baseball: false,
+    weapons: [
+        {
+            name: "baseballbat",
+            selected: false
+        }
+    ],
+    shoot: false,
+    shootDone: false,
     lastMove: 'right',
     numPlayers: 0,
     wormHeight: 30,
-    upVelocity: 0   //positive velocity is up
+    upVelocity: 0,   //positive velocity is up
+    weapon_pointer: -1,
+    next_weapon_pointer: 0
 }
 
 export var frame_period = 30; //framePeriod determins frame rate (50=20fps)

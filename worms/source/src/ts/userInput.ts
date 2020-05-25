@@ -62,8 +62,13 @@ function keyDownHandler(e) {
         console.log('jump!')
         gb.localState.upVelocity = 3; //unit m/s. Will literally move this speed on the screen
     } 
-    else if (e.key == "g") {
-        gb.localState.baseball = true;
+    else if (e.key == "f") {
+        if(gb.localState.weapon_pointer >= 0) gb.localState.weapons[gb.localState.weapon_pointer].selected = false;
+        if(gb.localState.next_weapon_pointer >= 0) gb.localState.weapons[gb.localState.next_weapon_pointer].selected = true;
+        gb.localState.weapon_pointer = gb.localState.next_weapon_pointer;
+    }
+    else if (e.key == "Enter") {
+        gb.localState.shoot = true;
     }
 }
 
@@ -77,8 +82,14 @@ function keyUpHandler(e) {
     else if(e.key == " " || e.key == "Spacebar") {
         event.preventDefault();
     }
-    else if (e.key == "g") {
-        gb.localState.baseball = false;
+    else if (e.key == "f") {
+        gb.localState.next_weapon_pointer = gb.localState.next_weapon_pointer + 1;
+        if (gb.localState.next_weapon_pointer > (gb.localState.weapons.length-1)) gb.localState.next_weapon_pointer = -1;
+    }
+    else if (e.key == "Enter") {
+        event.preventDefault();
+        gb.localState.shoot = false;
+        gb.localState.shootDone = false;
     }
 }
 

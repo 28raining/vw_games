@@ -1,10 +1,19 @@
 # Updates Page
 
+## May 24th
+- Seperate out animations in their own object *wk done*
+- Give basball bat a wood texture *wk done*
+- Why is baseball bat swinging the wrong way? fix. *wk fixed. Could add shadows, and also fix the zoom on wood texture in the future. Original issue was with bat leaving the fulstrum. x25 scaling means +- 100 z range needed*
+- Add button on right of screen to select bat or nothing *rotate through weapons using 'f'. No button*
+- swing bat using enter *done*
+- Started the health bar, not finished yet.
+
+
 ## May 17th
 - Fix the worms eyes. Maybe because they are a plane they are dissapearing?
 - Improve animation
 - Add baseball bat animation (press g!)
--everything looks very bad, doing a proof of concept first
+- everything looks very bad, doing a proof of concept first
 
 ## May 3rd
 
@@ -30,7 +39,7 @@ As a start, let's first aim to build the *worm with baseball bat*. There's many 
 3. Implement sprites or similar - a method to animate the worm. Prefer SVG, because then 1x sprite can be easily re-coloured (may want to use library for sprites? Makes it look simple) -> wk - no sprites but use SVG to create paths, then use Canvas to draw and modify the paths. Not bad!. 50% done (literally 50% of the worm)
 4. Sprite for the baseball bat, do animation
 5. Add a weapon selector and let user chose nothing or baseball bat
-6. What happens when the worm is hit by the bat? Full animation needed
+6. What happens when the worm is hit by the bat? Full animation needed 
 7. Add health meter and name above each worm
 8. Add game-over graphics + animations
 9. Add usernames and a game lobby - let people join a lobby then one person can take them into the game
