@@ -59,7 +59,7 @@ function keyDownHandler(e) {
         gb.localState.moveLeft = true;
     }
     else if(e.key == " " || e.key == "Spacebar") {
-        console.log('jump!')
+        // console.log('jump!')
         gb.localState.upVelocity = 3; //unit m/s. Will literally move this speed on the screen
     } 
     else if (e.key == "f") {

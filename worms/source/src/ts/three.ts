@@ -77,6 +77,8 @@ function animate( tFrame ) {
         obj.mixer.update(delta);
         let player = gb.gameGlobals.gameState.players[obj.player];
         obj.gltf.scene.position.set(player.x, player.y, -300);
+        obj.health_bar.outline.position.set(player.x-50, player.y-130, -300)
+        obj.health_bar.fill.position.set(player.x-50, player.y-130, -300)
         if (player.ml) {
           //Move Left
           obj.gltf.scene.scale.x = -25;
@@ -107,6 +109,8 @@ function animate( tFrame ) {
             obj.animations[val.name].timeScale = 2;
             if (gb.localState.shoot && !gb.localState.shootDone) {
               // gb.localState.shootDone = true;
+              gb.localState.health_percent = Math.max(0,gb.localState.health_percent - 10);
+              obj.health_bar = update_health_bar(gb.localState.health_percent, obj.health_bar,player.x-50, player.y-130)
               obj.animations[val.name].play();
               if (!obj.animations[val.name].enabled) obj.animations[val.name].reset();
             }
@@ -156,49 +160,63 @@ function gen_worm (player: Number) {
 
     //Create a health bar
     //example code here view-source:https://threejs.org/examples/webgl_geometry_shapes.html
-    var roundedRectShape = new THREE.Shape();
+    var health_bar = update_health_bar(100);
 
-    ( function roundedRect( ctx, x, y, width, height, radius ) {
-
-      ctx.moveTo( x, y + radius );
-      ctx.lineTo( x, y + height - radius );
-      ctx.quadraticCurveTo( x, y + height, x + radius, y + height );
-      ctx.lineTo( x + width - radius, y + height );
-      ctx.quadraticCurveTo( x + width, y + height, x + width, y + height - radius );
-      ctx.lineTo( x + width, y + radius );
-      ctx.quadraticCurveTo( x + width, y, x + width - radius, y );
-      ctx.lineTo( x + radius, y );
-      ctx.quadraticCurveTo( x, y, x, y + radius );
-
-    } )( roundedRectShape, 0, 0, 50, 50, 10 );
-
-    var geometry = new THREE.ShapeBufferGeometry( roundedRectShape );
-
-    var mesh = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color: 0x8080f0, side: THREE.DoubleSide } ) );
-    mesh.position.set( 20, 20, -50 );
-    myGameArea.scene.add(mesh)
-
-
-    // lines
-    var lineShape = (function addLineShape( shape, color, x, y) {
-      shape.autoClose = true;
-
-      var points = shape.getPoints();
-
-      var geometryPoints = new THREE.BufferGeometry().setFromPoints( points );
-
-      // solid line
-
-      var line = new THREE.Line( geometryPoints, new THREE.LineBasicMaterial( { color: color } ) );
-      line.position.set( x, y, -50 );
-      return line;
-    })(roundedRectShape,0xF080f0,20,20);
-
-    myGameArea.scene.add(lineShape)
-
-
-    worms.push({gltf,mixer,player,animations,weapons});
+    worms.push({gltf,mixer,player,animations,weapons,health_bar});
   });
+}
+
+function update_health_bar(health_percent, prev_obj=null,x=0,y=0) {
+    var health_bar = {};
+    console.log("health:" + health_percent)
+
+    if (prev_obj) myGameArea.scene.remove(prev_obj['fill']);
+
+    //Create the filled rectangle
+    if (health_percent > 0) {
+      var roundedRectShape = new THREE.Shape();
+      var rad_right = (health_percent==100) ? 10 : 0;
+      roundedRect( roundedRectShape, 0, 0, Math.round(50 * health_percent / 100), 20, 10,rad_right);
+      var geometry = new THREE.ShapeBufferGeometry( roundedRectShape );
+      var mesh = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color: 0x8080f0, side: THREE.DoubleSide } ) );
+      mesh.position.set(x,y,-50);
+      myGameArea.scene.add(mesh)
+      health_bar['fill']=mesh;
+    } else health_bar['fill']=prev_obj['fill'];
+
+    // create the outline
+    if (prev_obj) health_bar['outline'] = prev_obj['outline'];
+    else {
+      var lineShape = addLineShape (roundedRectShape,0xF080f0);
+      myGameArea.scene.add(lineShape);
+      health_bar['outline'] = lineShape;
+    }
+
+    return health_bar;
+}
+
+function roundedRect( ctx, x, y, width, height, radius_left, radius_right ) {
+
+  ctx.moveTo( x, y + radius_left );
+  ctx.lineTo( x, y + height - radius_left );
+  ctx.quadraticCurveTo( x, y + height, x + radius_left, y + height );
+  ctx.lineTo( x + width - radius_right, y + height );
+  ctx.quadraticCurveTo( x + width, y + height, x + width, y + height - radius_right );
+  ctx.lineTo( x + width, y + radius_right );
+  ctx.quadraticCurveTo( x + width, y, x + width - radius_right, y );
+  ctx.lineTo( x + radius_left, y );
+  ctx.quadraticCurveTo( x, y, x, y + radius_left );
+
+}
+function addLineShape( shape, color) {
+
+  shape.autoClose = true;
+  var points = shape.getPoints();
+  var geometryPoints = new THREE.BufferGeometry().setFromPoints( points );
+  // solid line
+  var line = new THREE.Line( geometryPoints, new THREE.LineBasicMaterial( { color: color } ) );
+  return line;
+
 }
 
 
@@ -229,19 +247,9 @@ function contour_component () {
         this.contour[i] = (y[index] + (j * (y[index+1] - y[index])/100));
     }
   };
-  // this.update = function () {
-  //   let ctx = myGameArea.context;
-  //   let i = 0;
-  //   ctx.beginPath();
-  //   ctx.lineWidth = 1;
-  //   ctx.strokeStyle = "green"; // Green path
-  //   ctx.moveTo(0, this.contour[0]);
-  //   for (i=1; i<canvas.width; i++) {
-  //     ctx.lineTo(i, this.contour[i]);
-  //   }
-  //   ctx.stroke(); // Draw it
-  // }
 }
+
+
 
 
 //load textures here... move somewhere better soon

@@ -27,7 +27,8 @@ export var localState = {
     wormHeight: 30,
     upVelocity: 0,   //positive velocity is up
     weapon_pointer: -1,
-    next_weapon_pointer: 0
+    next_weapon_pointer: 0,
+    health_percent : 100
 }
 
 export var frame_period = 30; //framePeriod determins frame rate (50=20fps)
