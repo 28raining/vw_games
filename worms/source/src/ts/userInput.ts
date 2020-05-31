@@ -1,7 +1,6 @@
 import * as db from './dataManagement'
 import * as gb from './gameGlobals'
 import * as renderer from './three'
-import {generateNextState} from './gameState'
 
 //detect keypresses
 export function initialise_listeners() {
@@ -26,9 +25,6 @@ export function gameStarting() {
     document.getElementById('gameID').innerHTML = "Your game ID is: <strong>"+ gb.gameGlobals.gameID +"</strong>";
     document.getElementById('gameCanvas').focus();
     renderer.startGame();
-    //update the state once. State will (probably) remain untouched until there is some user input
-    // generateNextState(true);
-
 }
 
 function create_new_game() {
@@ -60,7 +56,7 @@ function keyDownHandler(e) {
     }
     else if(e.key == " " || e.key == "Spacebar") {
         // console.log('jump!')
-        gb.localState.upVelocity = 3; //unit m/s. Will literally move this speed on the screen
+        gb.localState.yVelocity = .1; //unit m/s. Will literally move this speed on the screen
     } 
     else if (e.key == "f") {
         if(gb.localState.weapon_pointer >= 0) gb.localState.weapons[gb.localState.weapon_pointer].selected = false;
@@ -68,6 +64,11 @@ function keyDownHandler(e) {
         gb.localState.weapon_pointer = gb.localState.next_weapon_pointer;
     }
     else if (e.key == "Enter") {
+        //check if pressed, button not held down
+        if (gb.localState.shoot == false) {
+            gb.localState.projectilesToAdd.push(gb.localState.projectile_id);
+            gb.localState.projectile_id ++;
+        }
         gb.localState.shoot = true;
     }
 }

@@ -19,8 +19,8 @@ const canvas = <HTMLCanvasElement> document.getElementById("gameCanvas");
 // const canvas = canvas_dom.getContext("gameCanvas");
 
 export function startGame() {
-  myGameArea.start();
   myContour = new contour_component();
+  myGameArea.start();
   myContour.createContour();
   // myBackground = new bg_component(960, 450, img_background, 0, 0);
   animate(0); // Start the cycle. Performance gives current time in accurate precision
@@ -71,7 +71,8 @@ function animate( tFrame ) {
   window.requestAnimationFrame( animate );
   if (runRender) {
     if (tFrame > nextTick) {
-      nextTick = tFrame + gb.frame_period
+      nextTick = tFrame + gb.frame_period;
+
       delta = 5*myGameArea.clock.getDelta();
       worms.forEach(function(obj) {
         obj.mixer.update(delta);
@@ -79,14 +80,14 @@ function animate( tFrame ) {
         obj.gltf.scene.position.set(player.x, player.y, -300);
         obj.health_bar.outline.position.set(player.x-50, player.y-130, -300)
         obj.health_bar.fill.position.set(player.x-50, player.y-130, -300)
-        if (player.ml) {
+        if (player.xdir<0) {
           //Move Left
           obj.gltf.scene.scale.x = -25;
           obj.animations['walk_body'].play();
           obj.animations['walk_head'].play();
           obj.animations['walk_eyeright'].play();
           obj.animations['walk_eyeleft'].play();
-        } else if (player.mr) {
+        } else if (player.xdir>0) {
           //Move Right
           obj.gltf.scene.scale.x = 25;
           obj.animations['walk_body'].play();
@@ -108,7 +109,7 @@ function animate( tFrame ) {
             obj.animations[val.name].loop = THREE.LoopOnce;
             obj.animations[val.name].timeScale = 2;
             if (gb.localState.shoot && !gb.localState.shootDone) {
-              // gb.localState.shootDone = true;
+              gb.localState.shootDone = true;
               gb.localState.health_percent = Math.max(0,gb.localState.health_percent - 10);
               obj.health_bar = update_health_bar(gb.localState.health_percent, obj.health_bar,player.x-50, player.y-130)
               obj.animations[val.name].play();
