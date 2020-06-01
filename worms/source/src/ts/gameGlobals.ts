@@ -42,7 +42,8 @@ export var localState = {
     projectile_id : 1,
     projectiles : {},
     prevHits : [],
-    projectilesToAdd: []
+    projectilesToAdd: [],
+    projectilesToRemove: []
 }
 
 export var frame_period = 30; //framePeriod determins frame rate (50=20fps)

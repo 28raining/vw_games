@@ -23,8 +23,8 @@ export function generateNextState () {
     gb.localState.numPlayers = gb.gameGlobals.gameState.numPlayers;
 
     let update = movePlayer() || updateProjectiles(); 
-    // detectHit(gb.localState.x,gb.localState.y);   // search through projectiles in the game and detect if got hit.
-
+    detectHit(gb.localState.x,gb.localState.y);   // search through projectiles in the game and detect if got hit.
+    console.log(update);
     if(update) db.writeCoords();
 
 }
@@ -85,7 +85,6 @@ function movePlayer() {
     gb.localState.x = next_x;
     gb.localState.y = gravResult.next_y;
     gb.localState.xVelocity = new_velocity;
-    console.log(update_db, new_velocity);
     return update_db;
 }
 
@@ -100,7 +99,7 @@ function detectHit(x,y) {
                         if ((x > (projectile as any).zone_x_min) && (x < (projectile as any).zone_x_max)) {
                             console.log("I'm hit!")
                             gb.localState.yVelocity=.1;
-                            gb.localState.xVelocity=.1;
+                            gb.localState.xVelocity=2;
                         }
                     }
                 }
@@ -116,7 +115,6 @@ function updateProjectiles() {
     while (element_glob = gb.localState.projectilesToAdd.pop())
     {
         var element = element_glob;
-        console.log(element);
         update = true;
         gb.localState.projectiles[element] = {
             zone_x_min: gb.localState.x - 50,
@@ -125,10 +123,19 @@ function updateProjectiles() {
 
         //schedule a timeout to remove this projectile
         setTimeout( function() {
+            gb.localState.projectilesToRemove.push(element);
             delete gb.localState.projectiles[element];
             console.log("Projectile removed: " + element);
         }, 5000);
     };
+
+    while (element_glob = gb.localState.projectilesToRemove.pop())
+    {
+        //If there are any elements to remove, update the dB
+        update= true;   
+    }
+
+
     return update;
 }
 

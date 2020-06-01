@@ -4,6 +4,10 @@
 
 - Sort out gravity again, it's too slow **Done**
 - Let worm hit another worm.
+  - This has opened an interesting thought. This game is serverless, instead all there is a database containing all the game events and each user must decide if they're impacted. But, if the user has changed tabs, or temprorarily lost connection, they will become immune from projectiles? So if a user changes tab and you shoot him infinitely, the user doesn't notice so then he doesn't die? If we make one of the users into the server, the info has to travel user->db->admin_user->db->user, as opposed to user->server->user. That is also a bit messy, and even the admin user might go missing!. There are several solutions:
+    - Use a web-worker. These are always running in the background. Problem is that most of the game would go into the web worker, and they look hard to debug. It also requires websockets to communicate from the webworker to the website, quite a narrow channel
+    - Use a server. This is easiest to build and maintain. But it adds a middle man in terms of delay. And it also moves computing resources into a centralized location which we would have to pay for. Unless we used AWS or Google for the server, the latency would be big around the world. user->server->firebase->server->user, instead of user->firebase->user.
+    - So... Use a webworker?
   - How to do it: **Done**
     - Will create an array of projectiles. If the player is in the hit zone of one of these projectiles, they take a hit.
     - Each player has their own array, so you can identify where the obj came from, and mutliple users don't write to the same array.
