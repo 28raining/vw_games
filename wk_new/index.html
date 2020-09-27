@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Will Kelsey">
+  <title>VW Games</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="external/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+      
+  <header>
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+      <div class="container">
+        <a href="#" class="navbar-brand d-flex align-items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="mr-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          <strong>VW Games</strong>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="py-4 text-center container">
+      <div class="row">
+      <div class="col">
+          <h1 class="font-weight-light">Create a new game, or enter an existing game ID</h1>
+      </div>
+      </div>
+      <div class="py-2 row">
+        <div class="col">
+          <button class="btn btn-primary btn-lg" id="createNewGame">Create a new game</button>
+        </div>
+        <div class="col">
+          <div class="input-group">
+            <input type="number" class="form-control" placeholder="Game ID" id="inputGameID">
+            <a class="btn btn-primary btn-lg" type="button" id="joinGameReq">Join Game</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+      <div class="col">
+        <p>Your current game ID is <label id="gameID">N/A</label></p>
+      </div>
+      </div>
+      <div class="row">
+      <div class="col">
+        <canvas id="gameCanvas"></canvas>
+      </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="text-muted py-5">
+    <div class="container">
+      <p class="mb-1">I'm a footer</p>
+    </div>
+  </footer>
+
+  <script src="external/bootstrap.min.js"></script>
+  <script type="module" src="main.js"></script>
+
+      
+  </body>
+</html>

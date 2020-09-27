@@ -53,8 +53,8 @@ function getPlayerNumber (gameID : Number) {
   // Increment Ada's rank by 1.
   var incrementPlayerNumber = firebase_database.ref("gameInfo/game_" + gameID + "/numPlayers");
   //uses transaction to increment and read game number.
-  return incrementPlayerNumber.transaction(function(gameCount) {
-    return (gameCount || 0) + 1;
+  return incrementPlayerNumber.transaction(function(playerNum) {
+    return (playerNum || 0) + 1;
   });
 }
 
