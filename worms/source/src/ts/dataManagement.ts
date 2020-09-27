@@ -26,14 +26,12 @@ var gameRef;
 var playerRef;
 
 // Write some data
-export function writeCoords(x: number, y: number) {
-  gb.localState.x = x;
-  gb.localState.y = y;
+export function writeCoords() {
   return playerRef.set({
-      x: x,
-      y: y,
-      ml: gb.localState.moveLeft,
-      mr: gb.localState.moveRight
+      x: gb.localState.x,
+      y: gb.localState.y,
+      xdir : gb.localState.xVelocity,
+      projectiles: gb.localState.projectiles
   })
 }
 
@@ -77,7 +75,7 @@ export function joinGame (gameID) {
           playerRef = firebase_database.ref('gameInfo/game_' + gameID + '/players/' + tx_result.snapshot.val());
           gb.localState.playerNum = tx_result.snapshot.val();
           //write some initial data to this record, then continue
-          writeCoords(0,0).then(function() {
+          writeCoords().then(function() {
             //subscribe to updates from this page
             gameRef.on('value', function(snapshot) {
               updateGameState(snapshot.val());
